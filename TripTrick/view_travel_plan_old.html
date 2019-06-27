@@ -1,0 +1,27 @@
+{% extends 'triptricks/base_profile.html' %}
+
+{% block content %}
+ 
+<div class="container">
+		<h2 class="display-4"> Travel Places </h2>
+			<div class="row">
+            {% for form in view_plan %}
+                <div class="col-md-3 col-sm-6 col-xs-12" >
+                    <div class="service waves-effect" >
+                    
+                        <a href="{% url 'triptricks:edittravelplan' form.id %}"><i class="fa fa-pencil-square"></i></a>
+                        <div class="border" ></div>
+                        <div class="service-content" >
+                        	
+                            <h4>{{ form.destination_name }}</h4>
+                            <p>{{ form.number_days }}</p>
+                        </div>
+                    </div>
+                    
+                </div><!-- /.col-md-3 -->
+             {% endfor %}
+                
+            </div>
+            <a class="btn btn-primary" href="{% url 'triptricks:profile' %}">Return to profile</a>
+</div>
+{% endblock content %}
