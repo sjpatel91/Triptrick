@@ -1,0 +1,332 @@
+{% extends "triptricks/base_profile.html" %} {% block content %} 
+{% load staticfiles %}
+<div class="row">
+	<div class="col-md-6"></div>
+	<div class="col-md-6 text-right">
+		{% if user.is_authenticated %} <a class="btn btn-primary"
+			href="{% url 'triptricks:afterlogin' %}">Go Back Home</a>
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				Settings <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li><a href="{% url 'triptricks:logout' %}">logout</a></li>
+				<li><a href="{% url 'triptricks:change_password' %}">
+						Change password </a></li>
+			</ul>
+		</div>
+
+		<!-- <a class="btn btn-primary" href="{% url 'triptricks:logout' %}">logout</a>
+		     <a href="{% url 'triptricks:change_password' %}"> Change password </a> -->
+		{% endif %}
+		<!--  <a href="{% url 'triptricks:logout' %}"  class="btn btn-primary"><span>Logout</span></a>  -->
+
+	</div>
+	<!-- Start About Myself -->
+	<section id="about-me" class="about-us-section-1">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="section-title text-center">
+						<h2>@ {{ user.username }} Profile</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-4 center-block">
+					<div class="welcome-section text-center waves-effect">
+						<img src="{% static '/triptricks/assets/images/photo-1.jpg' %}"
+							id="pro" class="img-responsive" alt="..">
+						<h4></h4>
+						<div class="border"></div>
+
+					</div>
+				</div>
+
+			</div>
+			<!-- /.row -->
+
+		</div>
+		<!-- /.container -->
+	</section>
+	<!-- End About Us Section -->
+
+
+
+	<!-- Start Portfolio/Photos Section -->
+	<section id="portfolio" class="portfolio-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title text-center">
+						<h2>TripPics</h2>
+						<p>
+							My trip pictures<a href="{% url 'triptricks:upload_pic' %}"
+								id="signInBtn" class="btn btn-primary">Upload / View Photos</a>
+						</p>
+
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Start Portfolio items -->
+					<ul id="portfolio-list">
+
+						{% for profile_form in profile_images %}
+
+						<li>
+							<div class="portfolio-item">
+								<!-- <img src="{% static '/triptricks/assets/images/portfolio/port-5.jpg' %}" class="img-responsive" alt="" /> -->
+								<img src="{{ MEDIA_URL }}{{ profile_form.document.url }}"
+									style="width: 400px; height: 264px;" alt="" /> <img
+									id="the-modal" class="modal fade"
+									src="{{ MEDIA_URL }}{{ profile_form.document.url }}"
+									style="width: 800px; height: 518px;" alt="" />
+								<div class="portfolio-caption">
+									<h4>{{ profile_form.document.name }}</h4>
+									<a href="{{ MEDIA_URL }}{{ profile_form.document.url }}"
+										id="pop" class="link-1"><i class="fa fa-image"></i></a> <a
+										href="{% url 'triptricks:deleteimage' profile_form.id  %}"
+										class="link-2"><i class="fa fa-remove"></i></a>
+								</div>
+							</div>
+						</li> {% endfor %}
+
+
+
+					</ul>
+					<!-- End Portfolio items -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Portfolio Section -->
+
+
+
+
+	<!-- Start Service Section -->
+
+	<section id="service" class="services-section">
+
+		<div class="container">
+			<div class="input-group  pull-right " style="width: 150px">
+				<!-- Code for search travel plans -->
+				<div id="search_travel">
+					<form method="get" action="">
+
+						{{ filter.form.destination_name }}
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-search"></i>Search
+						</button>
+					</form>
+					<ul>
+						{% for plan in filter.qs %}
+
+						<li><a href="{% url 'triptricks:viewtravelplan' %}">{{ plan.destination_name }} </a></li> {% endfor %}
+					</ul>
+				</div>
+				<!-- <input type="text" class="form-control" placeholder="search" />
+			    	<span class="input-group-addon">
+			        <a href=""<i class="fa fa-search"></i></a>
+			    </span> -->
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title text-center">
+						<h2>My Travel Places</h2>
+						<a href="{% url 'triptricks:createnewplan' %}" id="addtravel"
+							class="btn btn-primary"> Add your travel plan</a> <a
+							href="{% url 'triptricks:viewtravelplan' %}" id="viewtravel"
+							class="btn btn-primary"> Edit/View Trick</a>
+						<p></p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				{% for profile_plan_form in profile_plan %}
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="service waves-effect">
+						<i class="fa fa-magic"></i>
+						<div class="border"></div>
+						<div class="service-content">
+							<h4>{{ profile_plan_form.destination_name }}</h4>
+							<p>{{ profile_plan_form.number_days }}</p>
+						</div>
+					</div>
+				</div>
+				<!-- /.col-md-3 -->
+				{% endfor %}
+
+			</div>
+		</div>
+	</section>
+	<!-- End Service Section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Start Client Section -->
+	<section id="client" class="client-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title text-center wow fadeInDown"
+						data-wow-duration="2s" data-wow-delay="50ms">
+						<h2>Trip Counts</h2>
+						<!-- Start Fun Facts Section -->
+						<section class="fun-facts">
+							<div class="container">
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="counter-item waves-effect">
+											<i class="fa fa-cloud-upload"></i>
+											<div class="timer" id="item1" data-to={{
+												total_images }} data-speed="5000"></div>
+											<h5>Photos uploaded</h5>
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="counter-item waves-effect">
+											<i class="fa fa-check"></i>
+											<div class="timer" id="item2" data-to={{
+												total_plan }} data-speed="5000"></div>
+											<h5>Trips completed</h5>
+										</div>
+									</div>
+
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="counter-item waves-effect">
+											<i class="fa fa-male"></i>
+											<div class="timer" id="item4" data-to="8423"
+												data-speed="5000"></div>
+											<h5>Trips Followed</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<!-- End Fun Facts Section -->
+					</div>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-md-12">
+					<div class="testimonial-section">
+						<div class="testimonial">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus
+								qui blanditiis praesentium voluptatum deleniti atque corrupti
+								quos dolores et quas molestias excepturi sint occaecati
+								cupiditate non provident, similique sunt in culpa qui officia
+								deserunt mollitia animi, id est laborum et dolorum fuga. Et
+								harum quidem rerum facilis est et expedita distinctio.</p>
+							<div class="testimonial-people pull-right">
+								<img src="assets/images/clients/client_1.png"
+									class="img-responsive" alt="Testimonial People">
+							</div>
+						</div>
+						<div class="testimonial">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus
+								qui blanditiis praesentium voluptatum deleniti atque corrupti
+								quos dolores et quas molestias excepturi sint occaecati
+								cupiditate non provident, similique sunt in culpa qui officia
+								deserunt mollitia animi, id est laborum et dolorum fuga. Et
+								harum quidem rerum facilis est et expedita distinctio.</p>
+							<div class="testimonial-people pull-right">
+								<img src="assets/images/clients/client_2.png"
+									class="img-responsive" alt="Testimonial People">
+							</div>
+						</div>
+						<div class="testimonial">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus
+								qui blanditiis praesentium voluptatum deleniti atque corrupti
+								quos dolores et quas molestias excepturi sint occaecati
+								cupiditate non provident, similique sunt in culpa qui officia
+								deserunt mollitia animi, id est laborum et dolorum fuga. Et
+								harum quidem rerum facilis est et expedita distinctio.</p>
+							<div class="testimonial-people pull-right">
+								<img src="assets/images/clients/client_3.png"
+									class="img-responsive" alt="Testimonial People">
+							</div>
+						</div>
+						<div class="testimonial">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus
+								qui blanditiis praesentium voluptatum deleniti atque corrupti
+								quos dolores et quas molestias excepturi sint occaecati
+								cupiditate non provident, similique sunt in culpa qui officia
+								deserunt mollitia animi, id est laborum et dolorum fuga. Et
+								harum quidem rerum facilis est et expedita distinctio.</p>
+							<div class="testimonial-people pull-right">
+								<img src="assets/images/clients/client_4.png"
+									class="img-responsive" alt="Testimonial People">
+							</div>
+						</div>
+						<div class="testimonial">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus
+								qui blanditiis praesentium voluptatum deleniti atque corrupti
+								quos dolores et quas molestias excepturi sint occaecati
+								cupiditate non provident, similique sunt in culpa qui officia
+								deserunt mollitia animi, id est laborum et dolorum fuga. Et
+								harum quidem rerum facilis est et expedita distinctio.</p>
+							<div class="testimonial-people pull-right">
+								<img src="assets/images/clients/client_5.png"
+									class="img-responsive" alt="Testimonial People">
+							</div>
+						</div>
+						<div class="testimonial">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus
+								qui blanditiis praesentium voluptatum deleniti atque corrupti
+								quos dolores et quas molestias excepturi sint occaecati
+								cupiditate non provident, similique sunt in culpa qui officia
+								deserunt mollitia animi, id est laborum et dolorum fuga. Et
+								harum quidem rerum facilis est et expedita distinctio.</p>
+							<div class="testimonial-people pull-right">
+								<img src="assets/images/clients/client_6.png"
+									class="img-responsive" alt="Testimonial People">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</section>
+	<!-- End Client Section -->
+
+
+
+
+
+
+	<!-- Start Map Section -->
+	<div class="google-map">
+		<div id="map"></div>
+		<div class="contact-info waves-effect">
+			<h4>Places Highlighted</h4>
+
+		</div>
+	</div>
+	<!-- End Map Section -->
+
+
+
+
+	{% endblock %}

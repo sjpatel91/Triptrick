@@ -1,0 +1,37 @@
+{% extends "triptricks/base.html" %}
+{% block content %}
+	<div class="container">
+	<div class="row">
+	<div class="clearfix">
+        <div class="col-lg-12 text-center">
+        	<h3>Please login to continue to access your profile </h3>
+ 			{% if form.errors %}
+				<div class="alert alert-warning" role="alert">Your username and password didn't match. Please try again.</div>
+			{% endif %}
+			
+ 			<form method="post" action="{% url 'triptricks:login' %}">
+ 				{% csrf_token %}
+ 				<!-- {{ form.as_p }}   -->
+ 				<div>
+				  <td>{{ form.username.label_tag }}</td>
+				  <td>{{ form.username }}</td>
+				</div>
+				<div>
+				  <td>{{ form.password.label_tag }}</td>
+				  <td>{{ form.password }}</td>
+				</div>
+ 				
+ 				<div>
+				<button class="btn btn-primary" name="submit">log in</button>
+				<input type="hidden" name="next" value="{% url 'triptricks:afterlogin' %}" /> 
+				</div>
+				{# Assumes you setup the password_reset view in your URLconf #}
+				<p><a href="{% url 'triptricks:password_reset' %}">Lost password?</a></p>
+			</form>
+			
+		</div>
+	</div>
+	</div>
+	</div>
+
+{% endblock content %}

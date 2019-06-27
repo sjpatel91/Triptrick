@@ -1,0 +1,35 @@
+{% extends 'triptricks/base_profile.html' %}
+
+{% block content %}
+
+<div class="container">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+ <div class="row">
+ <div class="col-md-12">
+  <ul id="portfolio-list">
+   {% for form in images %}
+   	<li>
+   		<div class="portfolio-item">
+	        <!-- {{forloop.counter}}.<a href="{{ form.document.url }}">{{ form.document.name }}</a> -->
+	        <img src="{{ MEDIA_URL }}{{ form.document.url }}" class="img-responsive" style="width: 400px; height: 264px;" alt="" ></a>
+	        <img id="the-modal" class="modal fade" src="{{ MEDIA_URL }}{{ form.document.url }}" style="width: 800px; height: 518px;" alt="" />
+	        <div class="portfolio-caption">
+	            <h4>{{ form.document.name }}</h4>
+	            <a href="{{ MEDIA_URL }}{{ form.document.url }}" id="pop"  class="link-1" ><i class="fa fa-image"></i></a>
+	            <a href="{% url 'triptricks:deleteimage' form.id  %}" class="link-2"><i class="fa fa-remove"></i></a>
+	        </div>
+	        <hr />
+       </div> 
+     </li>   
+    {% endfor %}
+  </ul>
+  </div>
+  </div> 
+
+  <p><a class="btn btn-primary" href="{% url 'triptricks:profile' %}">Return to profile</a></p>
+  </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'triptricks/base_profile.html' %}
+
+{% block content %}
+ 
+<div class="container">
+		<h2 class="display-4"> Travel Places </h2>
+			<div class="row">
+            {% for form in view_plan %}
+                <div class="col-md-3 col-sm-6 col-xs-12" >
+                
+                    <div class="btn-group ">
+                    
+                        <a class="btn btn-primary" ><i class="fa fa-user fa-fw"></i>{{ form.destination_name }}<p>{{ form.number_days }}</p></a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+						    <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
+						 </a>
+						 <ul class="dropdown-menu">
+						 	<li><a data-toggle="modal" data-target="#list-content-modal" href="{% url 'triptricks:listtravelcontents' form.id %}"><i class="fa fa-pencil fa-fw"></i> View</a></li>
+						 	
+						    <li><a data-toggle="modal" data-target="#list-content-modal" href="{% url 'triptricks:edittravelplan' form.id %}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
+						    <li><a href="{% url 'triptricks:deletetravelplan' form.id %}"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+                         </ul>	
+                            
+                    	
+                   </div>
+                    
+                </div><!-- /.col-md-3 -->
+               
+               <!-- Modal for view travel list content for particular destination -->
+							<div id="list-content-modal" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+							
+							    <!-- Modal content-->
+							    <div class="modal-content">
+							      
+							    </div>
+							
+							  </div>
+							</div>
+               
+             {% endfor %}
+                
+            </div>
+            <br/>
+            <a class="btn btn-primary" href="{% url 'triptricks:profile' %}">Return to profile</a>
+</div>
+{% endblock content %}

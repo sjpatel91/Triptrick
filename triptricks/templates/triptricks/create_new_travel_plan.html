@@ -1,0 +1,52 @@
+{% extends 'triptricks/base_profile.html' %}
+
+{% block content %}
+ 
+<div class="container">
+	
+           <h2>Add your Trip's Trick</h2>
+                 
+					<form method="post" class="form-horizontal" action="{% url 'triptricks:createnewplan' %}">
+						{% csrf_token %}
+						{{ form.as_p }}
+				     
+						<!--  <div class="form-group ">
+							
+								<label class="control-label" for="d_name">Destination </label>
+								<input class="form-control" type="text" id="d_name" name="d_name" value=""/>
+							
+						</div>
+						<div class="form-group">
+							
+								<label class="control-label" for="d_number">Number of Days </label>
+								<input class="form-control" type="text" id="d_number" name="d_number" value=""/>
+							
+						</div>
+						<div class="form-group">
+							
+								<label class="control-label" for="tokenfield-typeahead">Sub Destination </label>
+								<input type="text" class="form-control" id="tokenfield-typeahead" value=""  data-role="tagsinput" />
+							
+							
+						</div>
+						<div class="form-group">
+							
+								<label class="control-label" for="d_description">Description </label>
+								<input class="form-control" type="text" id="d_description" name="d_descrip" value=""/>
+							
+						</div>
+						<div class="form-group">
+						
+							<button class="btn btn-primary waves-effect" name="submit">Trick</button>
+							<input type="hidden" name="next" value="{% url 'triptricks:profile' %}" />
+						
+						</div>-->
+						<button class="btn btn-primary waves-effect" name="submit">Trick</button>
+						<a class="btn btn-primary" href="{% url 'triptricks:profile' %}">Return to profile</a>
+						<a class="btn btn-primary" href="{% url 'triptricks:viewtravelplan' %}">Return to Travel album</a>
+					
+					</form>
+			
+	
+</div>
+{% endblock content %}
